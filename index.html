@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AIML CLUB — Points Reconciliation</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent:#0f62fe;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f3f6fb;
+      --shadow: 0 8px 30px rgba(15,22,39,0.07);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#07122b;
+      padding:28px;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:24px;
+      align-items:start;
+    }
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h1{font-size:20px;margin:0 0 8px 0;color:var(--accent)}
+    label{display:block;font-size:13px;color:var(--muted);margin-top:12px}
+    input, textarea, select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #e6e9ef;
+      margin-top:6px;
+      font-size:14px;
+    }
+    .muted{color:var(--muted);font-size:13px}
+    .btn{
+      background:var(--accent);
+      color:white;
+      border:0;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+      margin-top:12px;
+    }
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid #d9e4ff}
+    .summary{display:grid;gap:8px;margin-top:12px}
+    .line{display:flex;justify-content:space-between;padding:10px;border-radius:8px;background:#f8fafc;font-size:14px}
+    .warning{color:#b91c1c;font-weight:700}
+    .invoice-wrap{padding:20px;background:white;border-radius:10px;box-shadow:0 8px 24px rgba(12,18,28,0.06)}
+    .invoice-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo img{height:72px;border-radius:8px}
+    .meta{font-size:13px;color:var(--muted)}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+    th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
+    th{background:#fbfdff;font-weight:700}
+    .text-right{text-align:right}
+    .small{font-size:13px;color:var(--muted)}
+    .footer{margin-top:16px;font-size:13px;color:var(--muted);border-top:1px dashed #eef2f7;padding-top:12px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr;padding:12px}
+    }
+    .notice-box{
+      margin-top:14px;
+      padding:12px;
+      border:1px solid #fca5a5;
+      border-radius:8px;
+      background:#fef2f2;
+      color:#7f1d1d;
+      font-size:13px;
+      line-height:1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Left side: inputs -->
+    <div class="card">
+      <h1>AIML CLUB — Points Reconciliation</h1>
+      <div class="muted">Issued by: <strong>AIML CLUB</strong> • President: <strong>Mahesh</strong></div>
+
+      <label for="name">Full Name</label>
+      <input id="name" placeholder="e.g., Mahesh Kumar" value="Mahesh Kumar">
+
+      <label for="hall">Hall Ticket Number</label>
+      <input id="hall" placeholder="e.g., SRU123456" value="SRU123456">
+
+      <label for="email">Email</label>
+      <input id="email" placeholder="e.g., mahesh@example.com" value="mahesh@example.com">
+
+      <label for="loginDate">Login Date</label>
+      <input id="loginDate" type="date" />
+
+      <label for="currentCoins">Current Total Coins</label>
+      <input id="currentCoins" type="number" min="0" value="1000" />
+
+      <div class="small" style="margin-top:8px">Extra points: you can either enter them now (comma-separated, e.g. 50,60) or leave empty and the app will ask after compute.</div>
+      <label for="extras">Extra Points (optional, comma-separated)</label>
+      <input id="extras" placeholder="50,60,70">
+
+      <label for="reason">Reason for extra points (optional)</label>
+      <input id="reason" placeholder="Hackathon prize, Event participation">
+
+      <div class="controls">
+        <button id="computeBtn" class="btn">Compute & Preview</button>
+        <button id="applyBtn" class="btn ghost">Apply Deduction (if needed)</button>
+      </div>
+
+      <div id="summaryBox" class="summary" style="margin-top:14px"></div>
+
+      <div class="footer small">
+        Issued by: <strong>AIML CLUB</strong> • President: <strong>Mahesh</strong><br>
+        For queries: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
+      </div>
+    </div>
+
+    <!-- Right side: invoice preview & download -->
+    <div>
+      <div id="invoiceWrap" class="invoice-wrap card" style="display:none">
+        <div id="invoiceContent">
+          <div class="invoice-header">
+            <div class="logo">
+              <img id="clubLogo" src="Club Logo.png" alt="AIML CLUB Logo">
+              <div>
+                <div style="font-weight:700;color:var(--accent);font-size:18px">AIML CLUB</div>
+                <div class="meta">Points Reconciliation / Statement</div>
+              </div>
+            </div>
+
+            <div class="meta">
+              <div id="invId">Invoice ID: —</div>
+              <div id="invDate">Date: —</div>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+            <div>
+              <div class="small">Name</div>
+              <div id="pName" style="font-weight:700">—</div>
+              <div class="small" style="margin-top:10px">Hall Ticket</div>
+              <div id="pHall" style="font-weight:700">—</div>
+            </div>
+            <div class="small">
+              <div>Login Date: <span id="pLogin">—</span></div>
+              <div>Current Date: <span id="pToday">—</span></div>
+              <div style="margin-top:8px">Contact: <strong>aiml.club@sru.edu.in</strong></div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Description</th><th class="text-right">Amount</th></tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+            <tfoot>
+              <tr><th style="text-align:right">Adjusted Allowed (Total)</th><th id="allowedTotal" class="text-right">—</th></tr>
+            </tfoot>
+          </table>
+
+          <div style="margin-top:12px">
+            <div id="reconcileText" class="small">—</div>
+          </div>
+
+          <!-- ⚠️ Deduction Notice -->
+          <div id="deductionNotice" class="notice-box" style="display:none">
+            Hello user, your coins have been <strong>deducted</strong> because there were multiple check-in rewards
+            recorded on the same day. This is considered a glitch and unfair to others.<br><br>
+            We are currently reviewing this. Please don’t be disappointed — you can earn more points
+            by participating or volunteering in AIML Club activities.<br><br>
+            If you believe this calculation is incorrect, kindly check the invoice and inform the President (Mahesh).<br>
+            For queries, contact: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
+          </div>
+
+          <div class="footer" style="margin-top:12px">
+            Issued by: <strong>AIML CLUB</strong> — President: <strong>Mahesh</strong><br>
+            For any queries contact: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button id="downloadPdfBtn" class="btn" style="display:none">Download Invoice (PDF)</button>
+        <button id="printBtn" class="btn ghost" style="display:none">Print Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- html2canvas + jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    (function(){
+      const DEFAULT_POINTS = 200;
+      const PER_DAY_POINTS = 10;
+
+      const loginDateInput = document.getElementById('loginDate');
+      const currentCoinsInput = document.getElementById('currentCoins');
+      const extrasInput = document.getElementById('extras');
+      const nameInput = document.getElementById('name');
+      const hallInput = document.getElementById('hall');
+      const reasonInput = document.getElementById('reason');
+
+      const computeBtn = document.getElementById('computeBtn');
+      const applyBtn = document.getElementById('applyBtn');
+      const summaryBox = document.getElementById('summaryBox');
+
+      const invoiceWrap = document.getElementById('invoiceWrap');
+      const invIdEl = document.getElementById('invId');
+      const invDateEl = document.getElementById('invDate');
+      const pName = document.getElementById('pName');
+      const pHall = document.getElementById('pHall');
+      const pLogin = document.getElementById('pLogin');
+      const pToday = document.getElementById('pToday');
+      const itemsBody = document.getElementById('itemsBody');
+      const allowedTotalEl = document.getElementById('allowedTotal');
+      const reconcileText = document.getElementById('reconcileText');
+      const deductionNotice = document.getElementById('deductionNotice');
+
+      const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+      const printBtn = document.getElementById('printBtn');
+
+      function formatDate(d){
+        const dd = String(d.getDate()).padStart(2,'0');
+        const mm = String(d.getMonth()+1).padStart(2,'0');
+        const yyyy = d.getFullYear();
+        return `${dd}-${mm}-${yyyy}`;
+      }
+      function daysBetween(start,end){
+        return Math.floor((end-start)/(1000*60*60*24));
+      }
+      function parseExtras(text){
+        if(!text) return [];
+        return text.split(',').map(s=>+s.trim()).filter(n=>!isNaN(n)&&n>0);
+      }
+
+      async function computeAndRender({applyNormalization=false}={}){
+        const loginDate = loginDateInput.value ? new Date(loginDateInput.value) : null;
+        if(!loginDate){ alert('Enter login date'); return; }
+        const today = new Date();
+        if(today < loginDate){ alert('Invalid dates'); return; }
+
+        const name = nameInput.value.trim();
+        const hall = hallInput.value.trim();
+        let currentCoins = +currentCoinsInput.value || 0;
+
+        const days = daysBetween(loginDate,today);
+        const earned = days * PER_DAY_POINTS;
+        let baseMax = DEFAULT_POINTS + earned;
+
+        const extrasArr = parseExtras(extrasInput.value);
+        const extraSum = extrasArr.reduce((a,b)=>a+b,0);
+        const adjustedMax = baseMax + extraSum;
+
+        let difference = currentCoins - adjustedMax;
+        let deduction = difference>0?difference:0;
+        let normalized = currentCoins - deduction;
+
+        if(applyNormalization && deduction>0){
+          currentCoins = normalized;
+          currentCoinsInput.value = normalized;
+        }
+
+        summaryBox.innerHTML='';
+        [['Default Points',DEFAULT_POINTS],['Days Active',days],['Earned Points',earned],
+         ['Base Maximum Allowed',baseMax],['Extra Points',extraSum],['Adjusted Maximum Allowed',adjustedMax],
+         ['Your Current Coins',currentCoins],['Deduction Required',deduction],['Normalized Coins',normalized]
+        ].forEach(([k,v])=>{
+          const div=document.createElement('div');
+          div.className='line'; div.innerHTML=`<div>${k}</div><div><strong>${v}</strong></div>`;
+          summaryBox.appendChild(div);
+        });
+
+        invIdEl.textContent='Invoice ID: INV-'+Date.now();
+        invDateEl.textContent='Date: '+formatDate(today);
+        pName.textContent=name; pHall.textContent=hall;
+        pLogin.textContent=formatDate(loginDate); pToday.textContent=formatDate(today);
+
+        itemsBody.innerHTML='';
+        [
+          {desc:'Default Points',amt:DEFAULT_POINTS},
+          {desc:`Earned Points (${days} × ${PER_DAY_POINTS})`,amt:earned},
+          {desc:'Base Allowed Maximum',amt:baseMax},
+          ...extrasArr.map((v,i)=>({desc: reasonInput.value?reasonInput.value:`Extra #${i+1}`,amt:v})),
+          {desc:'Adjusted Maximum',amt:adjustedMax},
+          {desc:'Current Coins',amt:currentCoins},
+          {desc:'Deduction Applied',amt:deduction},
+          {desc:'Normalized Coins After Deduction',amt:normalized}
+        ].forEach(r=>{
+          const tr=document.createElement('tr');
+          tr.innerHTML=`<td>${r.desc}</td><td class="text-right">${r.amt}</td>`;
+          itemsBody.appendChild(tr);
+        });
+        allowedTotalEl.textContent=adjustedMax;
+
+        // text + notice
+        if(deduction>0){
+          reconcileText.innerHTML=`<span class="warning">Over allowed limit by ${deduction} points. Deduction required.</span>`;
+          deductionNotice.style.display='block';
+        } else if(deduction===0 && currentCoins===adjustedMax){
+          reconcileText.textContent='Your coins exactly match the allowed maximum.';
+          deductionNotice.style.display='none';
+        } else {
+          reconcileText.textContent=`You are below the allowed maximum by ${Math.abs(difference)} points.`;
+          deductionNotice.style.display='none';
+        }
+
+        invoiceWrap.style.display='block';
+        downloadPdfBtn.style.display='inline-block';
+        printBtn.style.display='inline-block';
+      }
+
+      computeBtn.addEventListener('click',()=>computeAndRender());
+      applyBtn.addEventListener('click',()=>computeAndRender({applyNormalization:true}));
+
+      downloadPdfBtn.addEventListener('click',async()=>{
+        await computeAndRender();
+        const content=document.getElementById('invoiceContent');
+        const canvas=await html2canvas(content,{scale:2,scrollY:-window.scrollY});
+        const imgData=canvas.toDataURL('image/png');
+        const {jsPDF}=window.jspdf;
+        const pdf=new jsPDF({orientation:'portrait',unit:'pt',format:'a4'});
+        const w=pdf.internal.pageSize.getWidth()-40;
+        const h=(canvas.height*w)/canvas.width;
+        pdf.addImage(imgData,'PNG',20,20,w,h);
+        pdf.save('invoice.pdf');
+      });
+      printBtn.addEventListener('click',async()=>{
+        await computeAndRender();
+        const win=window.open('','_blank');
+        win.document.write(document.getElementById('invoiceContent').outerHTML);
+        win.print();
+      });
+
+      loginDateInput.value='2025-08-27';
+    })();
+  </script>
+</body>
+</html>
