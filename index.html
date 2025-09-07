@@ -5,88 +5,494 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AIML CLUB — Points Reconciliation</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --accent:#0f62fe;
-      --muted:#6b7280;
-      --card:#ffffff;
-      --bg:#f3f6fb;
-      --shadow: 0 8px 30px rgba(15,22,39,0.07);
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --secondary: #64748b;
+      --accent: #0f62fe;
+      --success: #059669;
+      --warning: #d97706;
+      --error: #dc2626;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --shadow: 0 10px 40px rgba(15,22,39,0.08);
+      --shadow-lg: 0 20px 60px rgba(15,22,39,0.12);
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:#07122b;
-      padding:28px;
+    
+    * {
+      box-sizing: border-box;
     }
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns: 420px 1fr;
-      gap:24px;
-      align-items:start;
+    
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #0f172a;
+      padding: 32px;
+      line-height: 1.6;
+      font-weight: 400;
     }
-    .card{
-      background:var(--card);
-      border-radius:12px;
-      padding:18px;
-      box-shadow:var(--shadow);
+    
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 32px;
+      align-items: start;
     }
-    h1{font-size:20px;margin:0 0 8px 0;color:var(--accent)}
-    label{display:block;font-size:13px;color:var(--muted);margin-top:12px}
-    input, textarea, select{
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border:1px solid #e6e9ef;
-      margin-top:6px;
-      font-size:14px;
+    
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-light);
     }
-    .muted{color:var(--muted);font-size:13px}
-    .btn{
-      background:var(--accent);
-      color:white;
-      border:0;
-      padding:10px 14px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:14px;
-      margin-top:12px;
+    
+    .header-section {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
     }
-    .btn.ghost{background:transparent;color:var(--accent);border:1px solid #d9e4ff}
-    .summary{display:grid;gap:8px;margin-top:12px}
-    .line{display:flex;justify-content:space-between;padding:10px;border-radius:8px;background:#f8fafc;font-size:14px}
-    .warning{color:#b91c1c;font-weight:700}
-    .invoice-wrap{padding:20px;background:white;border-radius:10px;box-shadow:0 8px 24px rgba(12,18,28,0.06)}
-    .invoice-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px}
-    .logo{display:flex;align-items:center;gap:12px}
-    .logo img{height:72px;border-radius:8px}
-    .meta{font-size:13px;color:var(--muted)}
-    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
-    th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
-    th{background:#fbfdff;font-weight:700}
-    .text-right{text-align:right}
-    .small{font-size:13px;color:var(--muted)}
-    .footer{margin-top:16px;font-size:13px;color:var(--muted);border-top:1px dashed #eef2f7;padding-top:12px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    @media (max-width:980px){
-      .wrap{grid-template-columns:1fr;padding:12px}
+    
+    .club-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 4px 0;
+      letter-spacing: -0.025em;
     }
-    .notice-box{
-      margin-top:14px;
-      padding:12px;
-      border:1px solid #fca5a5;
-      border-radius:8px;
-      background:#fef2f2;
-      color:#7f1d1d;
-      font-size:13px;
-      line-height:1.5;
+    
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .president-info {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--secondary);
+    }
+    
+    h1 {
+      font-size: 20px;
+      margin: 0 0 8px 0;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      color: var(--secondary);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      font-size: 14px;
+      transition: all 0.2s ease;
+      background: #fafbfc;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .help-text {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+    
+    .btn.secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn.secondary:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    .summary {
+      display: grid;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: #f8fafc;
+      font-size: 14px;
+      border-left: 4px solid var(--border);
+    }
+    
+    .summary-item.highlight {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left-color: var(--warning);
+      font-weight: 600;
+    }
+    
+    .summary-item.success {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border-left-color: var(--success);
+    }
+    
+    .summary-item.error {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border-left-color: var(--error);
+      color: var(--error);
+      font-weight: 600;
+    }
+    
+    /* Invoice Styles */
+    .invoice-wrap {
+      padding: 32px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+    
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
+    }
+    
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .logo-section img {
+      height: 64px;
+      width: 64px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .company-info h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 4px 0;
+      letter-spacing: -0.025em;
+    }
+    
+    .company-info .tagline {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    
+    .invoice-meta {
+      text-align: right;
+      font-size: 13px;
+      color: var(--secondary);
+    }
+    
+    .invoice-meta div {
+      margin-bottom: 4px;
+    }
+    
+    .client-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+    }
+    
+    .info-block h4 {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+    }
+    
+    .info-block p {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--secondary);
+      margin: 0 0 12px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    th {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-weight: 600;
+      color: var(--secondary);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+    
+    .text-right {
+      text-align: right;
+    }
+    
+    .table-total {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .reconcile-status {
+      margin: 24px 0;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .status-success {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border: 1px solid #10b981;
+      color: #065f46;
+    }
+    
+    .status-warning {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1px solid #f59e0b;
+      color: #92400e;
+    }
+    
+    .status-error {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border: 1px solid #ef4444;
+      color: #991b1b;
+    }
+    
+    .notice-box {
+      margin: 24px 0;
+      padding: 20px;
+      border: 2px solid #fca5a5;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      color: #7f1d1d;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .notice-box strong {
+      color: #991b1b;
+    }
+    
+    .footer-info {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 2px dashed var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body {
+        background: white !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+      }
+      
+      .wrap {
+        display: block !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      .card:first-child {
+        display: none !important;
+      }
+      
+      .invoice-wrap {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 20px !important;
+        margin: 0 !important;
+      }
+      
+      .logo-section img {
+        height: 48px !important;
+        width: 48px !important;
+        max-width: 48px !important;
+        max-height: 48px !important;
+      }
+      
+      .company-info h2 {
+        font-size: 18px !important;
+      }
+      
+      .action-buttons {
+        display: none !important;
+      }
+      
+      .invoice-header {
+        margin-bottom: 20px !important;
+      }
+      
+      .client-info {
+        margin-bottom: 20px !important;
+        padding: 15px !important;
+      }
+      
+      table {
+        margin: 15px 0 !important;
+      }
+      
+      th, td {
+        padding: 10px !important;
+      }
+      
+      .reconcile-status {
+        margin: 15px 0 !important;
+        padding: 15px !important;
+      }
+      
+      .notice-box {
+        margin: 15px 0 !important;
+        padding: 15px !important;
+      }
+      
+      .footer-info {
+        margin-top: 20px !important;
+        padding-top: 15px !important;
+      }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .wrap {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 24px;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .invoice-wrap {
+        padding: 24px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+      
+      .invoice-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+      
+      .client-info {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .btn {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -94,42 +500,64 @@
   <div class="wrap">
     <!-- Left side: inputs -->
     <div class="card">
-      <h1>AIML CLUB — Points Reconciliation</h1>
-      <div class="muted">Issued by: <strong>AIML CLUB</strong> • President: <strong>Mahesh</strong></div>
+      <div class="header-section">
+        <div class="club-title">AIML CLUB</div>
+        <div class="subtitle">Points Reconciliation System</div>
+        <div class="president-info">
+          <strong>President:</strong> Mahesh Kumar<br>
+          <strong>Contact:</strong> aiml.club@sru.edu.in
+        </div>
+      </div>
 
-      <label for="name">Full Name</label>
-      <input id="name" placeholder="e.g., Mahesh Kumar" value="Mahesh Kumar">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" placeholder="Enter your full name" value="Mahesh Kumar">
+      </div>
 
-      <label for="hall">Hall Ticket Number</label>
-      <input id="hall" placeholder="e.g., SRU123456" value="SRU123456">
+      <div class="form-group">
+        <label for="hall">Hall Ticket Number</label>
+        <input id="hall" placeholder="Enter hall ticket number" value="SRU123456">
+      </div>
 
-      <label for="email">Email</label>
-      <input id="email" placeholder="e.g., mahesh@example.com" value="mahesh@example.com">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" placeholder="Enter your email" value="mahesh@example.com">
+      </div>
 
-      <label for="loginDate">Login Date</label>
-      <input id="loginDate" type="date" />
+      <div class="form-group">
+        <label for="loginDate">Login Date</label>
+        <input id="loginDate" type="date" />
+        <div class="help-text">Select the date when you first joined the club</div>
+      </div>
 
-      <label for="currentCoins">Current Total Coins</label>
-      <input id="currentCoins" type="number" min="0" value="1000" />
+      <div class="form-group">
+        <label for="currentCoins">Current Total Coins</label>
+        <input id="currentCoins" type="number" min="0" value="1000" />
+        <div class="help-text">Enter your current coin balance</div>
+      </div>
 
-      <div class="small" style="margin-top:8px">Extra points: you can either enter them now (comma-separated, e.g. 50,60) or leave empty and the app will ask after compute.</div>
-      <label for="extras">Extra Points (optional, comma-separated)</label>
-      <input id="extras" placeholder="50,60,70">
+      <div class="form-group">
+        <label for="extras">Extra Points (Optional)</label>
+        <input id="extras" placeholder="50,60,70">
+        <div class="help-text">Enter comma-separated values for additional points earned</div>
+      </div>
 
-      <label for="reason">Reason for extra points (optional)</label>
-      <input id="reason" placeholder="Hackathon prize, Event participation">
+      <div class="form-group">
+        <label for="reason">Reason for Extra Points</label>
+        <input id="reason" placeholder="Hackathon prize, Event participation, etc.">
+        <div class="help-text">Describe why you received extra points</div>
+      </div>
 
       <div class="controls">
-        <button id="computeBtn" class="btn">Compute & Preview</button>
-        <button id="applyBtn" class="btn ghost">Apply Deduction (if needed)</button>
+        <button id="computeBtn" class="btn">
+          <span>📊</span> Compute & Preview
+        </button>
+        <button id="applyBtn" class="btn secondary">
+          <span>⚖️</span> Apply Deduction
+        </button>
       </div>
 
-      <div id="summaryBox" class="summary" style="margin-top:14px"></div>
-
-      <div class="footer small">
-        Issued by: <strong>AIML CLUB</strong> • President: <strong>Mahesh</strong><br>
-        For queries: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
-      </div>
+      <div id="summaryBox" class="summary"></div>
     </div>
 
     <!-- Right side: invoice preview & download -->
@@ -137,68 +565,85 @@
       <div id="invoiceWrap" class="invoice-wrap card" style="display:none">
         <div id="invoiceContent">
           <div class="invoice-header">
-            <div class="logo">
+            <div class="logo-section">
               <img id="clubLogo" src="Club Logo.png" alt="AIML CLUB Logo">
-              <div>
-                <div style="font-weight:700;color:var(--accent);font-size:18px">AIML CLUB</div>
-                <div class="meta">Points Reconciliation / Statement</div>
+              <div class="company-info">
+                <h2>AIML CLUB</h2>
+                <div class="tagline">Points Reconciliation Statement</div>
               </div>
             </div>
 
-            <div class="meta">
-              <div id="invId">Invoice ID: —</div>
-              <div id="invDate">Date: —</div>
+            <div class="invoice-meta">
+              <div id="invId"><strong>Invoice ID:</strong> —</div>
+              <div id="invDate"><strong>Date:</strong> —</div>
+              <div style="margin-top: 8px; color: var(--muted);">
+                <strong>Status:</strong> <span id="statusBadge">Processing</span>
+              </div>
             </div>
           </div>
 
-          <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
-            <div>
-              <div class="small">Name</div>
-              <div id="pName" style="font-weight:700">—</div>
-              <div class="small" style="margin-top:10px">Hall Ticket</div>
-              <div id="pHall" style="font-weight:700">—</div>
+          <div class="client-info">
+            <div class="info-block">
+              <h4>Student Information</h4>
+              <p id="pName">—</p>
+              <p><strong>Hall Ticket:</strong> <span id="pHall">—</span></p>
+              <p><strong>Email:</strong> <span id="pEmail">—</span></p>
             </div>
-            <div class="small">
-              <div>Login Date: <span id="pLogin">—</span></div>
-              <div>Current Date: <span id="pToday">—</span></div>
-              <div style="margin-top:8px">Contact: <strong>aiml.club@sru.edu.in</strong></div>
+            <div class="info-block">
+              <h4>Timeline</h4>
+              <p><strong>Login Date:</strong> <span id="pLogin">—</span></p>
+              <p><strong>Current Date:</strong> <span id="pToday">—</span></p>
+              <p><strong>Days Active:</strong> <span id="pDays">—</span></p>
             </div>
           </div>
 
           <table>
             <thead>
-              <tr><th>Description</th><th class="text-right">Amount</th></tr>
+              <tr>
+                <th>Description</th>
+                <th class="text-right">Points</th>
+              </tr>
             </thead>
             <tbody id="itemsBody"></tbody>
             <tfoot>
-              <tr><th style="text-align:right">Adjusted Allowed (Total)</th><th id="allowedTotal" class="text-right">—</th></tr>
+              <tr class="table-total">
+                <th>Maximum Allowed Total</th>
+                <th id="allowedTotal" class="text-right">—</th>
+              </tr>
             </tfoot>
           </table>
 
-          <div style="margin-top:12px">
-            <div id="reconcileText" class="small">—</div>
+          <div id="reconcileStatus" class="reconcile-status">
+            <div id="reconcileText">—</div>
           </div>
 
-          <!-- ⚠️ Deduction Notice -->
           <div id="deductionNotice" class="notice-box" style="display:none">
-            Hello user, your coins have been <strong>deducted</strong> because there were multiple check-in rewards
-            recorded on the same day. This is considered a glitch and unfair to others.<br><br>
-            We are currently reviewing this. Please don’t be disappointed — you can earn more points
-            by participating or volunteering in AIML Club activities.<br><br>
-            If you believe this calculation is incorrect, kindly check the invoice and inform the President (Mahesh).<br>
-            For queries, contact: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
+            <strong>⚠️ Deduction Applied</strong><br><br>
+            Your coins have been <strong>deducted</strong> because there were multiple check-in rewards
+            recorded on the same day. This is considered a system glitch and unfair to other members.<br><br>
+            We are currently reviewing this issue. Please don't be disappointed — you can earn more points
+            by actively participating in AIML Club activities and events.<br><br>
+            If you believe this calculation is incorrect, please review the invoice details and contact
+            President Mahesh for clarification.<br><br>
+            <strong>Contact:</strong> <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
           </div>
 
-          <div class="footer" style="margin-top:12px">
-            Issued by: <strong>AIML CLUB</strong> — President: <strong>Mahesh</strong><br>
-            For any queries contact: <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a>
+          <div class="footer-info">
+            <strong>AIML CLUB</strong> — Artificial Intelligence & Machine Learning Club<br>
+            <strong>President:</strong> Mahesh Kumar<br>
+            <strong>Email:</strong> <a href="mailto:aiml.club@sru.edu.in">aiml.club@sru.edu.in</a><br>
+            <em>This is an automated system-generated statement</em>
           </div>
         </div>
       </div>
 
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button id="downloadPdfBtn" class="btn" style="display:none">Download Invoice (PDF)</button>
-        <button id="printBtn" class="btn ghost" style="display:none">Print Invoice</button>
+      <div class="action-buttons">
+        <button id="downloadPdfBtn" class="btn" style="display:none">
+          <span>📄</span> Download PDF
+        </button>
+        <button id="printBtn" class="btn secondary" style="display:none">
+          <span>🖨️</span> Print Invoice
+        </button>
       </div>
     </div>
   </div>
@@ -217,6 +662,7 @@
       const extrasInput = document.getElementById('extras');
       const nameInput = document.getElementById('name');
       const hallInput = document.getElementById('hall');
+      const emailInput = document.getElementById('email');
       const reasonInput = document.getElementById('reason');
 
       const computeBtn = document.getElementById('computeBtn');
@@ -226,12 +672,16 @@
       const invoiceWrap = document.getElementById('invoiceWrap');
       const invIdEl = document.getElementById('invId');
       const invDateEl = document.getElementById('invDate');
+      const statusBadge = document.getElementById('statusBadge');
       const pName = document.getElementById('pName');
       const pHall = document.getElementById('pHall');
+      const pEmail = document.getElementById('pEmail');
       const pLogin = document.getElementById('pLogin');
       const pToday = document.getElementById('pToday');
+      const pDays = document.getElementById('pDays');
       const itemsBody = document.getElementById('itemsBody');
       const allowedTotalEl = document.getElementById('allowedTotal');
+      const reconcileStatus = document.getElementById('reconcileStatus');
       const reconcileText = document.getElementById('reconcileText');
       const deductionNotice = document.getElementById('deductionNotice');
 
@@ -239,27 +689,48 @@
       const printBtn = document.getElementById('printBtn');
 
       function formatDate(d){
-        const dd = String(d.getDate()).padStart(2,'0');
-        const mm = String(d.getMonth()+1).padStart(2,'0');
-        const yyyy = d.getFullYear();
-        return `${dd}-${mm}-${yyyy}`;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return d.toLocaleDateString('en-US', options);
       }
+      
       function daysBetween(start,end){
         return Math.floor((end-start)/(1000*60*60*24));
       }
+      
       function parseExtras(text){
         if(!text) return [];
         return text.split(',').map(s=>+s.trim()).filter(n=>!isNaN(n)&&n>0);
       }
 
+      function createSummaryItem(label, value, type = '') {
+        const div = document.createElement('div');
+        div.className = `summary-item ${type}`;
+        div.innerHTML = `<div>${label}</div><div><strong>${value}</strong></div>`;
+        return div;
+      }
+
       async function computeAndRender({applyNormalization=false}={}){
         const loginDate = loginDateInput.value ? new Date(loginDateInput.value) : null;
-        if(!loginDate){ alert('Enter login date'); return; }
+        if(!loginDate){ 
+          alert('Please enter a valid login date'); 
+          return; 
+        }
+        
         const today = new Date();
-        if(today < loginDate){ alert('Invalid dates'); return; }
+        if(today < loginDate){ 
+          alert('Login date cannot be in the future'); 
+          return; 
+        }
 
         const name = nameInput.value.trim();
         const hall = hallInput.value.trim();
+        const email = emailInput.value.trim();
+        
+        if(!name || !hall) {
+          alert('Please fill in all required fields');
+          return;
+        }
+        
         let currentCoins = +currentCoinsInput.value || 0;
 
         const days = daysBetween(loginDate,today);
@@ -279,78 +750,154 @@
           currentCoinsInput.value = normalized;
         }
 
+        // Update summary
         summaryBox.innerHTML='';
-        [['Default Points',DEFAULT_POINTS],['Days Active',days],['Earned Points',earned],
-         ['Base Maximum Allowed',baseMax],['Extra Points',extraSum],['Adjusted Maximum Allowed',adjustedMax],
-         ['Your Current Coins',currentCoins],['Deduction Required',deduction],['Normalized Coins',normalized]
-        ].forEach(([k,v])=>{
-          const div=document.createElement('div');
-          div.className='line'; div.innerHTML=`<div>${k}</div><div><strong>${v}</strong></div>`;
-          summaryBox.appendChild(div);
-        });
-
-        invIdEl.textContent='Invoice ID: INV-'+Date.now();
-        invDateEl.textContent='Date: '+formatDate(today);
-        pName.textContent=name; pHall.textContent=hall;
-        pLogin.textContent=formatDate(loginDate); pToday.textContent=formatDate(today);
-
-        itemsBody.innerHTML='';
-        [
-          {desc:'Default Points',amt:DEFAULT_POINTS},
-          {desc:`Earned Points (${days} × ${PER_DAY_POINTS})`,amt:earned},
-          {desc:'Base Allowed Maximum',amt:baseMax},
-          ...extrasArr.map((v,i)=>({desc: reasonInput.value?reasonInput.value:`Extra #${i+1}`,amt:v})),
-          {desc:'Adjusted Maximum',amt:adjustedMax},
-          {desc:'Current Coins',amt:currentCoins},
-          {desc:'Deduction Applied',amt:deduction},
-          {desc:'Normalized Coins After Deduction',amt:normalized}
-        ].forEach(r=>{
-          const tr=document.createElement('tr');
-          tr.innerHTML=`<td>${r.desc}</td><td class="text-right">${r.amt}</td>`;
-          itemsBody.appendChild(tr);
-        });
-        allowedTotalEl.textContent=adjustedMax;
-
-        // text + notice
-        if(deduction>0){
-          reconcileText.innerHTML=`<span class="warning">Over allowed limit by ${deduction} points. Deduction required.</span>`;
-          deductionNotice.style.display='block';
-        } else if(deduction===0 && currentCoins===adjustedMax){
-          reconcileText.textContent='Your coins exactly match the allowed maximum.';
-          deductionNotice.style.display='none';
-        } else {
-          reconcileText.textContent=`You are below the allowed maximum by ${Math.abs(difference)} points.`;
-          deductionNotice.style.display='none';
+        summaryBox.appendChild(createSummaryItem('Default Points', DEFAULT_POINTS));
+        summaryBox.appendChild(createSummaryItem('Days Active', days));
+        summaryBox.appendChild(createSummaryItem('Earned Points', earned));
+        summaryBox.appendChild(createSummaryItem('Base Maximum', baseMax));
+        if(extraSum > 0) {
+          summaryBox.appendChild(createSummaryItem('Extra Points', extraSum, 'highlight'));
+        }
+        summaryBox.appendChild(createSummaryItem('Adjusted Maximum', adjustedMax, 'success'));
+        summaryBox.appendChild(createSummaryItem('Current Coins', currentCoins));
+        if(deduction > 0) {
+          summaryBox.appendChild(createSummaryItem('Deduction Required', deduction, 'error'));
+          summaryBox.appendChild(createSummaryItem('Normalized Coins', normalized, 'success'));
         }
 
-        invoiceWrap.style.display='block';
-        downloadPdfBtn.style.display='inline-block';
-        printBtn.style.display='inline-block';
+        // Update invoice
+        const invoiceId = 'INV-' + Date.now();
+        invIdEl.innerHTML = `<strong>Invoice ID:</strong> ${invoiceId}`;
+        invDateEl.innerHTML = `<strong>Date:</strong> ${formatDate(today)}`;
+        
+        pName.textContent = name;
+        pHall.textContent = hall;
+        pEmail.textContent = email;
+        pLogin.textContent = formatDate(loginDate);
+        pToday.textContent = formatDate(today);
+        pDays.textContent = days;
+
+        // Update status badge
+        if(deduction > 0) {
+          statusBadge.textContent = 'Deduction Applied';
+          statusBadge.style.color = 'var(--error)';
+        } else {
+          statusBadge.textContent = 'Verified';
+          statusBadge.style.color = 'var(--success)';
+        }
+
+        // Update table
+        itemsBody.innerHTML='';
+        const items = [
+          {desc:'Default Points', amt:DEFAULT_POINTS},
+          {desc:`Daily Earned Points (${days} days × ${PER_DAY_POINTS})`, amt:earned},
+          {desc:'Base Maximum Allowed', amt:baseMax}
+        ];
+        
+        extrasArr.forEach((v,i) => {
+          const reason = reasonInput.value || `Extra Points #${i+1}`;
+          items.push({desc: reason, amt: v});
+        });
+        
+        items.push(
+          {desc:'<strong>Adjusted Maximum Total</strong>', amt:`<strong>${adjustedMax}</strong>`},
+          {desc:'Current Coins Balance', amt:currentCoins}
+        );
+        
+        if(deduction > 0) {
+          items.push(
+            {desc:'<span style="color: var(--error)">Deduction Applied</span>', amt:`<span style="color: var(--error)">${deduction}</span>`},
+            {desc:'<span style="color: var(--success)">Final Balance</span>', amt:`<span style="color: var(--success)">${normalized}</span>`}
+          );
+        }
+
+        items.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${item.desc}</td><td class="text-right">${item.amt}</td>`;
+          itemsBody.appendChild(tr);
+        });
+        
+        allowedTotalEl.textContent = adjustedMax;
+
+        // Update reconciliation status
+        if(deduction > 0) {
+          reconcileStatus.className = 'reconcile-status status-error';
+          reconcileText.innerHTML = `<strong>⚠️ Over Limit:</strong> Your current balance exceeds the allowed maximum by <strong>${deduction} points</strong>. Deduction has been applied to normalize your account.`;
+          deductionNotice.style.display = 'block';
+        } else if(difference === 0) {
+          reconcileStatus.className = 'reconcile-status status-success';
+          reconcileText.innerHTML = `<strong>✅ Perfect Balance:</strong> Your coins exactly match the allowed maximum of <strong>${adjustedMax} points</strong>.`;
+          deductionNotice.style.display = 'none';
+        } else {
+          reconcileStatus.className = 'reconcile-status status-success';
+          reconcileText.innerHTML = `<strong>✅ Within Limit:</strong> You are <strong>${Math.abs(difference)} points</strong> below the maximum allowed. Your account is in good standing.`;
+          deductionNotice.style.display = 'none';
+        }
+
+        invoiceWrap.style.display = 'block';
+        downloadPdfBtn.style.display = 'inline-flex';
+        printBtn.style.display = 'inline-flex';
       }
 
-      computeBtn.addEventListener('click',()=>computeAndRender());
-      applyBtn.addEventListener('click',()=>computeAndRender({applyNormalization:true}));
+      computeBtn.addEventListener('click', () => computeAndRender());
+      applyBtn.addEventListener('click', () => computeAndRender({applyNormalization: true}));
 
-      downloadPdfBtn.addEventListener('click',async()=>{
-        await computeAndRender();
-        const content=document.getElementById('invoiceContent');
-        const canvas=await html2canvas(content,{scale:2,scrollY:-window.scrollY});
-        const imgData=canvas.toDataURL('image/png');
-        const {jsPDF}=window.jspdf;
-        const pdf=new jsPDF({orientation:'portrait',unit:'pt',format:'a4'});
-        const w=pdf.internal.pageSize.getWidth()-40;
-        const h=(canvas.height*w)/canvas.width;
-        pdf.addImage(imgData,'PNG',20,20,w,h);
-        pdf.save('invoice.pdf');
-      });
-      printBtn.addEventListener('click',async()=>{
-        await computeAndRender();
-        const win=window.open('','_blank');
-        win.document.write(document.getElementById('invoiceContent').outerHTML);
-        win.print();
+      downloadPdfBtn.addEventListener('click', async () => {
+        const content = document.getElementById('invoiceContent');
+        
+        try {
+          const canvas = await html2canvas(content, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            scrollY: -window.scrollY,
+            width: content.scrollWidth,
+            height: content.scrollHeight
+          });
+          
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'pt',
+            format: 'a4'
+          });
+          
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const margin = 40;
+          const contentWidth = pageWidth - (margin * 2);
+          const contentHeight = (canvas.height * contentWidth) / canvas.width;
+          
+          if (contentHeight <= pageHeight - (margin * 2)) {
+            pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, contentHeight);
+          } else {
+            // Handle multiple pages if content is too long
+            let yPosition = margin;
+            const pageContentHeight = pageHeight - (margin * 2);
+            const ratio = contentWidth / canvas.width;
+            const scaledHeight = canvas.height * ratio;
+            
+            pdf.addImage(imgData, 'PNG', margin, yPosition, contentWidth, scaledHeight);
+          }
+          
+          const fileName = `AIML_Club_Invoice_${Date.now()}.pdf`;
+          pdf.save(fileName);
+        } catch (error) {
+          console.error('Error generating PDF:', error);
+          alert('Error generating PDF. Please try again.');
+        }
       });
 
-      loginDateInput.value='2025-08-27';
+      printBtn.addEventListener('click', () => {
+        window.print();
+      });
+
+      // Set default date to a reasonable past date
+      const defaultDate = new Date();
+      defaultDate.setMonth(defaultDate.getMonth() - 3); // 3 months ago
+      loginDateInput.value = defaultDate.toISOString().split('T')[0];
     })();
   </script>
 </body>
